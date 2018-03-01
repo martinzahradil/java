@@ -1,7 +1,7 @@
 package testOcp;
 
 import java.io.File;
-import java.util.stream.Stream;
+
 
 public class StreamTest {
 	
@@ -17,7 +17,7 @@ public class StreamTest {
 			System.out.println(a);
 		}
 		System.out.println(System.getProperty("user.dir"));
-		File[] pelicko= k.listRoots();
+		File[] pelicko= File.listRoots();
 		for (File file: pelicko) {
 			System.out.println(file);
 			System.out.println(file.getFreeSpace());
