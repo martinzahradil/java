@@ -1,6 +1,7 @@
 package testOcp;
 
 public class Browsers {
+	public int test = 9;
 	static class Browser {
 		public void go() {
 			System.out.println("Inside Browser");
