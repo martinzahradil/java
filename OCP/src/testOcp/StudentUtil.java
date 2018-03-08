@@ -83,6 +83,13 @@ public class StudentUtil {
 		for (int a : pokus) {
 			System.out.println(a);
 		}
+		int f= 'a';
+		System.out.println(f);
+		
+		Integer i1 = Integer.valueOf(5000);
+		Integer i2 = Integer.valueOf(5000);
+		System.out.println(i1==i2);
+
 	}
 
 }
