@@ -1,42 +1,45 @@
 package cz.isonsoft.lukas;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 public class LoopTest {
 	public static void main(String[] args) {
-		Set<String> set = new HashSet<String>(); // Arrays.asList("jedna", "dva", "tri");
-	/*	set.add("jedna");
-		set.add("dva");
-		set.add("tri");
-		set.add("dva");
+	    long total = 235;
+	    long startTime = System.currentTimeMillis();
 
-		List<Car> listCar = new ArrayList<>();
-		listCar.add(new Car("octavia", 5, "modra"));
-		listCar.add(new Car("ceed", 10, "cerna"));
-		listCar.add(new Car("323", 15, "stribrna"));
-
-		String[] pole = { "jedna", "dva", "tri" };
-
-		outer: for (Car test : listCar) {
-
-			System.out.println(test.getModel());
-			inner: for (String ineerTest : pole) {
-				if (ineerTest == "dva") {
-					break ;
-				}
-				System.out.println("pole : " + ineerTest);
-			}
-		}*/
-		
-		String tes = "neco neco";
-		tes.substring(0, 5);
-		System.out.println(tes);
-		
-		LocalDate ld = LocalDate.of();
-		ld=ld.plusDays(5);
-		System.out.println(ld);
+	    for (int i = 1; i <= total; i = i + 3) {
+	        try {
+	            Thread.sleep(50);
+	            printProgress(startTime, total, i);
+	        } catch (InterruptedException e) {
+	        }
+	    }
 	}
 
+
+	private static void printProgress(long startTime, long total, long current) {
+	    long eta = current == 0 ? 0 : 
+	        (total - current) * (System.currentTimeMillis() - startTime) / current;
+
+	    String etaHms = current == 0 ? "N/A" : 
+	            String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(eta),
+	                    TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
+	                    TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1));
+
+	    StringBuilder string = new StringBuilder(140);   
+	    int percent = (int) (current * 100 / total);
+	    string
+	        .append('\r')
+	        .append(String.join("", Collections.nCopies(percent == 0 ? 2 : 2 - (int) (Math.log10(percent)), " ")))
+	        .append(String.format(" %d%% [", percent))
+	        .append(String.join("", Collections.nCopies(percent, "=")))
+	        .append('>')
+	        .append(String.join("", Collections.nCopies(100 - percent, " ")))
+	        .append(']')
+	        .append(String.join("", Collections.nCopies((int) (Math.log10(total)) - (int) (Math.log10(current)), " ")))
+	        .append(String.format(" %d/%d, ETA: %s", current, total, etaHms));
+
+	    System.out.print(string);
+	}
 }
